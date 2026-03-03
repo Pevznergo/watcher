@@ -3,7 +3,7 @@ set -e
 
 APP_DIR="/var/www/watcher.aporto.tech"
 APP_NAME="watcher-app"
-PORT=3008
+PORT=3007
 
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo "  🚀 Aporto.tech — Deploy Script"
