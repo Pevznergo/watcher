@@ -314,12 +314,12 @@ export default function Home() {
 
           {/* Headline */}
           <h1 style={{
-            fontSize: "clamp(48px, 7vw, 88px)",
+            fontSize: "clamp(48px, 6vw, 84px)",
             fontWeight: 800,
             lineHeight: 1.05,
             letterSpacing: "-0.03em",
             marginBottom: 24,
-            maxWidth: 700,
+            maxWidth: 1000,
           }}>
             AI agent observability,<br />
             built for OpenClaw.
