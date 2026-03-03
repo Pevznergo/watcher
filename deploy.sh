@@ -1,7 +1,7 @@
 #!/bin/bash
 # Deployment script for watcher
 echo "Starting deployment..."
-cd /Users/igortkachenko/Downloads/watcher || exit
+cd /var/www/watcher.aporto.tech || exit
 
 # Pull latest changes from GitHub
 echo "Pulling from GitHub..."
