@@ -358,10 +358,10 @@ export default function Home() {
             </div>
             <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
               {[
-                { model: "GPT-4o", color: "#10a37f" },
-                { model: "Claude 3.5", color: "#c96442" },
-                { model: "Gemini 2.0", color: "#4285f4" },
-                { model: "+ 200 models", color: "#52525b" },
+                { model: "MiniMax M2.5", color: "#10a37f" },
+                { model: "Claude Opus 4.6", color: "#c96442" },
+                { model: "Gemini 3 Flash", color: "#4285f4" },
+                { model: "+ 30 models", color: "#52525b" },
               ].map((m) => (
                 <span key={m.model} style={{
                   background: "rgba(255,255,255,0.05)",
@@ -705,47 +705,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* LEADERBOARD */}
-      <section id="leaderboard" style={{ padding: "80px 0" }}>
-        <div style={{ maxWidth: 800, margin: "0 auto", padding: "0 24px" }}>
-          <AnimatedSection>
-            <div style={{ textAlign: "center", marginBottom: 48 }}>
-              <h2 style={{ fontSize: "clamp(28px, 4vw, 42px)", fontWeight: 800, marginBottom: 12 }}>Top Models</h2>
-              <p style={{ color: "#71717a", fontSize: 16 }}>Most used models across Aporto.tech projects this week</p>
-            </div>
-          </AnimatedSection>
-
-          <AnimatedSection delay={100}>
-            <div style={{ background: "#111118", border: "1px solid #1e1e2e", borderRadius: 16, overflow: "hidden" }}>
-              <div style={{ padding: "16px 24px", borderBottom: "1px solid #1e1e2e", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span style={{ fontSize: 13, fontWeight: 600, color: "#a1a1aa" }}>MODEL</span>
-                <span style={{ fontSize: 13, fontWeight: 600, color: "#a1a1aa" }}>SHARE</span>
-              </div>
-              {[
-                { rank: 1, name: "claude-3-7-sonnet", share: "38%", width: "38%", color: "#a855f7" },
-                { rank: 2, name: "claude-3-5-haiku", share: "22%", width: "22%", color: "#6366f1" },
-                { rank: 3, name: "gpt-4o", share: "18%", width: "18%", color: "#3b82f6" },
-                { rank: 4, name: "gpt-3.5-turbo", share: "12%", width: "12%", color: "#22c55e" },
-                { rank: 5, name: "mistral-large", share: "7%", width: "7%", color: "#f59e0b" },
-                { rank: 6, name: "gemini-pro", share: "3%", width: "3%", color: "#06b6d4" },
-              ].map((model, i) => (
-                <div key={model.name} style={{ padding: "16px 24px", borderBottom: i < 5 ? "1px solid #1e1e2e" : undefined, display: "flex", alignItems: "center", gap: 16 }}>
-                  <span style={{ fontSize: 13, color: "#52525b", width: 20, textAlign: "center", flexShrink: 0 }}>{model.rank}</span>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-                      <span style={{ fontSize: 14, fontWeight: 500 }}>{model.name}</span>
-                      <span style={{ fontSize: 13, color: "#71717a" }}>{model.share}</span>
-                    </div>
-                    <div style={{ height: 4, background: "#1e1e2e", borderRadius: 2 }}>
-                      <div style={{ width: model.width, height: "100%", background: model.color, borderRadius: 2, transition: "width 1s ease" }} />
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
 
       {/* PRICING */}
       <section id="pricing" style={{ padding: "80px 0" }}>
