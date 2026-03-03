@@ -321,7 +321,8 @@ export default function Home() {
             marginBottom: 24,
             maxWidth: 700,
           }}>
-            AI agent observability, built for the future.
+            AI agent observability,<br />
+            built for OpenClaw.
           </h1>
 
           {/* Subtext */}
