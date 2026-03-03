@@ -1,0 +1,34 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id            String         @id @default(cuid())
+  name          String
+  email         String         @unique
+  password      String
+  queuePosition Int
+  createdAt     DateTime       @default(now())
+  subscriptions Subscription[]
+}
+
+model Subscription {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  plan            String   @default("FREE") // FREE | PRO
+  creditPackage   String?  // null | "S" ($22) | "M" ($50) | "L" ($100)
+  creditPackagePaid Float?  // 22 | 50 | 100
+  aiCreditsIncluded Float  // 1 (free) | 12 (pro) | +30/+65/+130 (packs)
+  totalPaid       Float    // 0 | 9 | 9+22 etc
+  status          String   @default("ACTIVE") // ACTIVE | CANCELLED
+  createdAt       DateTime @default(now())
+}

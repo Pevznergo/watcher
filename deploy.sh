@@ -1,25 +1,47 @@
 #!/bin/bash
-# Deployment script for watcher
-echo "Starting deployment..."
-cd /var/www/watcher.aporto.tech || exit
+set -e
 
-# Pull latest changes from GitHub
-echo "Pulling from GitHub..."
+APP_DIR="/var/www/watcher.aporto.tech"
+APP_NAME="watcher-app"
+PORT=3008
+
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  🚀 Aporto.tech — Deploy Script"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+# ── 1. Pull latest code ─────────────────────────
+echo ""
+echo "📦 [1/5] Pulling latest code from GitHub..."
+cd "$APP_DIR" || { echo "❌ App directory not found: $APP_DIR"; exit 1; }
 git pull origin main
 
-# Navigate to Next.js app directory
-cd my-app || exit
+# ── 2. Install dependencies ──────────────────────
+echo ""
+echo "📥 [2/5] Installing dependencies..."
+cd my-app
+npm ci --prefer-offline 2>/dev/null || npm install
 
-# Install dependencies
-echo "Installing dependencies..."
-npm install
+# ── 3. Prisma — generate client & run migrations ─
+echo ""
+echo "🗄️  [3/5] Running Prisma migrations..."
+npx prisma generate
+npx prisma migrate deploy
 
-# Build Next.js
-echo "Building Next.js app..."
+# ── 4. Build Next.js ─────────────────────────────
+echo ""
+echo "🔨 [4/5] Building Next.js app..."
 npm run build
 
-# Restart or start application using PM2 on port 3008
-echo "Restarting application..."
-pm2 restart watcher-app || pm2 start npm --name "watcher-app" -- start
+# ── 5. Restart PM2 ───────────────────────────────
+echo ""
+echo "♻️  [5/5] Restarting application (PM2)..."
+pm2 restart "$APP_NAME" 2>/dev/null || \
+  pm2 start npm --name "$APP_NAME" -- start -- --port $PORT
 
-echo "Deployment finished successfully!"
+pm2 save
+
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  ✅ Deployment finished!"
+echo "  🌍 https://aporto.tech"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
