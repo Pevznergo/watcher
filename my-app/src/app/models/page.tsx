@@ -60,12 +60,12 @@ function Navbar() {
 async function getModelsData() {
     try {
         // Fetch yieldcars models
-        const ycRes = await fetch("https://yieldcars.com/api/pricing", { next: { revalidate: 3600 } });
+        const ycRes = await fetch("https://yieldcars.com/api/pricing", { next: { revalidate: 60 } });
         const ycData = await ycRes.json();
         const yieldModels = ycData.data || [];
 
         // Fetch openrouter models
-        const orRes = await fetch("https://openrouter.ai/api/v1/models", { next: { revalidate: 3600 } });
+        const orRes = await fetch("https://openrouter.ai/api/v1/models", { next: { revalidate: 60 } });
         const orData = await orRes.json();
         const orModels = orData.data || [];
 
@@ -79,12 +79,12 @@ async function getModelsData() {
         const yieldcarToORMapping: Record<string, string> = {
             "trinity/trinity-large-preview": "arcee-ai/trinity-large-preview:free",
             "gemini-2.5-pro": "google/gemini-2.5-pro",
-            "anthropic/claude-4.5-sonnet": "anthropic/claude-3.5-sonnet",
-            "anthropic/claude-4.6-sonnet": "anthropic/claude-3.7-sonnet",
-            "anthropic/claude-4.5-opus": "anthropic/claude-3-opus",
-            "anthropic/claude-4.6-opus": "anthropic/claude-3-opus",
-            "google/gemini-3.0-flash-preview": "google/gemini-2.5-flash",
-            "google/gemini-3.0-pro-preview": "google/gemini-2.5-pro",
+            "anthropic/claude-4.5-sonnet": "anthropic/claude-sonnet-4.5",
+            "anthropic/claude-4.6-sonnet": "anthropic/claude-sonnet-4.6",
+            "anthropic/claude-4.5-opus": "anthropic/claude-opus-4.5",
+            "anthropic/claude-4.6-opus": "anthropic/claude-opus-4.6",
+            "google/gemini-3.0-flash-preview": "google/gemini-3-flash-preview",
+            "google/gemini-3.0-pro-preview": "google/gemini-3-pro-preview",
             "google/gemini-2.0-flash-lite": "google/gemini-2.0-flash-lite-001"
         };
 
@@ -109,13 +109,20 @@ async function getModelsData() {
                 contextLength = orInfo.context_length ? orInfo.context_length.toLocaleString() : "N/A";
             }
 
+            // Manual overrides for specific models if needed (e.g. if OR cache is stale or mapping is confusing)
+            if (name === "anthropic/claude-4.5-sonnet") {
+                pricePrompt = "$3.0000";
+                priceCompletion = "$15.0000";
+                contextLength = "200,000";
+            }
+
             return {
                 id: name,
                 vendor: ym.vendor_id,
                 pricePrompt,
                 priceCompletion,
                 contextLength,
-                hasOfficialPricing: !!orInfo
+                hasOfficialPricing: !!orInfo || name === "anthropic/claude-4.5-sonnet"
             };
         });
 
