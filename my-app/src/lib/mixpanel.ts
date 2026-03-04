@@ -1,6 +1,5 @@
 import mixpanel from 'mixpanel-browser';
 
-const isProduction = process.env.NODE_ENV === 'production';
 // Fallback directly to your token to guarantee it works even if .env is not loaded
 const MIXPANEL_TOKEN = process.env.NEXT_PUBLIC_MIXPANEL_TOKEN || '895541f1e18e9c94613014bee9bb92df';
 
