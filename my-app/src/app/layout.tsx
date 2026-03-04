@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GoogleTagManager } from '@next/third-parties/google';
 import "./globals.css";
 import Providers from "./providers";
 
@@ -144,6 +145,7 @@ export default function RootLayout({
       </head>
       <body>
         <Providers>{children}</Providers>
+        <GoogleTagManager gtmId="GTM-TC3ZDB2V" />
       </body>
     </html>
   );

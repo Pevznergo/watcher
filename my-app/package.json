@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@next/third-parties": "^16.1.6",
     "@prisma/client": "^6.19.2",
     "@types/mixpanel-browser": "^2.60.0",
     "mixpanel-browser": "^2.75.0",
