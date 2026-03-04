@@ -78,6 +78,14 @@ async function getModelsData() {
         // Some yieldcars models have different IDs on OpenRouter
         const yieldcarToORMapping: Record<string, string> = {
             "trinity/trinity-large-preview": "arcee-ai/trinity-large-preview:free",
+            "gemini-2.5-pro": "google/gemini-2.5-pro",
+            "anthropic/claude-4.5-sonnet": "anthropic/claude-3.5-sonnet",
+            "anthropic/claude-4.6-sonnet": "anthropic/claude-3.7-sonnet",
+            "anthropic/claude-4.5-opus": "anthropic/claude-3-opus",
+            "anthropic/claude-4.6-opus": "anthropic/claude-3-opus",
+            "google/gemini-3.0-flash-preview": "google/gemini-2.5-flash",
+            "google/gemini-3.0-pro-preview": "google/gemini-2.5-pro",
+            "google/gemini-2.0-flash-lite": "google/gemini-2.0-flash-lite-001"
         };
 
         // Combine
@@ -129,11 +137,35 @@ export default async function ModelsPage() {
             <Navbar />
 
             <main style={{ paddingTop: 120, paddingBottom: 80, maxWidth: 1000, margin: "0 auto", paddingLeft: 24, paddingRight: 24 }}>
-                <div style={{ textAlign: "center", marginBottom: 48 }}>
+                <div style={{ textAlign: "center", marginBottom: 32 }}>
                     <h1 style={{ fontSize: "clamp(36px, 5vw, 48px)", fontWeight: 800, marginBottom: 16 }}>Available Models</h1>
                     <p style={{ color: "#71717a", fontSize: 18, maxWidth: 600, margin: "0 auto" }}>
                         A complete list of supported models powered by YieldCars. Prices shown are official OpenRouter rates per 1M tokens.
                     </p>
+                </div>
+
+                {/* Missing Model Banner */}
+                <div style={{
+                    background: "rgba(59, 130, 246, 0.1)",
+                    border: "1px solid rgba(59, 130, 246, 0.2)",
+                    borderRadius: 12,
+                    padding: "16px 20px",
+                    marginBottom: 32,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 12,
+                    maxWidth: 600,
+                    margin: "0 auto 48px auto"
+                }}>
+                    <span style={{ fontSize: 20 }}>💡</span>
+                    <div>
+                        <div style={{ fontSize: 14, fontWeight: 600, color: "#fff", marginBottom: 4 }}>
+                            Don&apos;t see the model you need?
+                        </div>
+                        <div style={{ fontSize: 13, color: "#93c5fd" }}>
+                            Contact us at <a href="mailto:support@aporto.tech" style={{ color: "#fff", textDecoration: "underline" }}>support@aporto.tech</a> and we&apos;ll add it for you immediately.
+                        </div>
+                    </div>
                 </div>
 
                 <div style={{
