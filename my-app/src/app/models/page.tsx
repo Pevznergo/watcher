@@ -75,10 +75,16 @@ async function getModelsData() {
             orMap.set(model.id, model);
         }
 
+        // Some yieldcars models have different IDs on OpenRouter
+        const yieldcarToORMapping: Record<string, string> = {
+            "trinity/trinity-large-preview": "arcee-ai/trinity-large-preview:free",
+        };
+
         // Combine
         const combinedModels = yieldModels.map((ym: any) => {
             const name = ym.model_name;
-            const orInfo = orMap.get(name);
+            const mappedName = yieldcarToORMapping[name] || name;
+            const orInfo = orMap.get(mappedName);
 
             let pricePrompt = "N/A";
             let priceCompletion = "N/A";
@@ -152,9 +158,6 @@ export default async function ModelsPage() {
                                         <tr key={model.id} style={{ borderBottom: "1px solid #1e1e2e", background: i % 2 === 0 ? "transparent" : "rgba(255,255,255,0.01)", transition: "background 0.2s" }} className="table-row-hover">
                                             <td style={{ padding: "16px 24px", fontSize: 14, fontWeight: 500, color: "#fff" }}>
                                                 {model.id}
-                                                {!model.hasOfficialPricing && (
-                                                    <span style={{ marginLeft: 8, fontSize: 10, background: "rgba(239, 68, 68, 0.1)", color: "#ef4444", padding: "2px 6px", borderRadius: 4 }}>Unknown on OR</span>
-                                                )}
                                             </td>
                                             <td style={{ padding: "16px 24px", fontSize: 14, color: "#71717a" }}>{model.contextLength}</td>
                                             <td style={{ padding: "16px 24px", fontSize: 14, color: model.pricePrompt === "N/A" ? "#52525b" : "#22c55e" }}>{model.pricePrompt}</td>
