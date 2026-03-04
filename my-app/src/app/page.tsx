@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import PricingProCard from "@/components/PricingProCard";
+import { trackEvent } from "@/lib/mixpanel";
 
 // Aporto logo icon
 function ClawIcon() {
@@ -58,8 +59,8 @@ function Navbar() {
 
         {/* Right side */}
         <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 16 }}>
-          <a href="/login" className="nav-link" style={{ fontSize: 14, fontWeight: 500, textDecoration: "none" }}>Sign in</a>
-          <a href="/register" className="btn-orange" style={{ padding: "8px 20px", fontSize: 14, textDecoration: "none" }}>Get Started</a>
+          <a href="/login" onClick={() => trackEvent("Clicked Login", { location: "Navbar" })} className="nav-link" style={{ fontSize: 14, fontWeight: 500, textDecoration: "none" }}>Sign in</a>
+          <a href="/register" onClick={() => trackEvent("Clicked Get Started", { location: "Navbar" })} className="btn-orange" style={{ padding: "8px 20px", fontSize: 14, textDecoration: "none" }}>Get Started</a>
         </div>
       </div>
     </nav>
@@ -380,10 +381,10 @@ export default function Home() {
 
           {/* CTAs */}
           <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 32, flexWrap: "wrap" }}>
-            <a href="/register" className="btn-orange-large" style={{ textDecoration: "none" }}>
+            <a href="/register" onClick={() => trackEvent("Clicked Get Started", { location: "Hero CTA" })} className="btn-orange-large" style={{ textDecoration: "none" }}>
               Get Started Free →
             </a>
-            <a href="/login" className="btn-ghost" style={{ fontSize: 16, padding: "16px 8px", textDecoration: "none", display: "flex", alignItems: "center", gap: 6 }}>
+            <a href="/login" onClick={() => trackEvent("Clicked Login", { location: "Hero secondary" })} className="btn-ghost" style={{ fontSize: 16, padding: "16px 8px", textDecoration: "none", display: "flex", alignItems: "center", gap: 6 }}>
               Sign in <span>›</span>
             </a>
           </div>
@@ -447,7 +448,7 @@ export default function Home() {
         </div>
 
         <div style={{ textAlign: "center", marginTop: 48 }}>
-          <a href="/register" className="btn-orange-large" style={{ textDecoration: "none" }}>
+          <a href="/register" onClick={() => trackEvent("Clicked Get Started", { location: "Testimonials" })} className="btn-orange-large" style={{ textDecoration: "none" }}>
             Get Started Free →
           </a>
         </div>
@@ -591,7 +592,7 @@ export default function Home() {
           </div>
 
           <div style={{ textAlign: "center", marginTop: 48 }}>
-            <a href="/register" className="btn-orange-large" style={{ textDecoration: "none" }}>
+            <a href="/register" onClick={() => trackEvent("Clicked Get Started", { location: "Features End" })} className="btn-orange-large" style={{ textDecoration: "none" }}>
               Start Monitoring Free →
             </a>
             <p style={{ marginTop: 12, fontSize: 13, color: "#52525b" }}>Free forever • Setup in 2 minutes</p>
@@ -762,7 +763,7 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
-                <a href="/register" style={{ display: "block", width: "100%", padding: "14px", background: "transparent", border: "1px solid #2a2a3e", borderRadius: 10, color: "#fff", fontWeight: 600, cursor: "pointer", fontSize: 15, transition: "all 0.2s", textAlign: "center", textDecoration: "none", boxSizing: "border-box" }}>
+                <a href="/register" onClick={() => trackEvent("Clicked Pricing Plan", { plan: "Free" })} style={{ display: "block", width: "100%", padding: "14px", background: "transparent", border: "1px solid #2a2a3e", borderRadius: 10, color: "#fff", fontWeight: 600, cursor: "pointer", fontSize: 15, transition: "all 0.2s", textAlign: "center", textDecoration: "none", boxSizing: "border-box" }}>
                   Get Started Free →
                 </a>
               </div>
@@ -793,7 +794,7 @@ export default function Home() {
             <p style={{ fontSize: 18, color: "#71717a", marginBottom: 40 }}>
               Join developers who are saving money and shipping faster with Aporto.tech.
             </p>
-            <a href="/register" className="btn-orange-large" style={{ fontSize: 18, textDecoration: "none" }}>
+            <a href="/register" onClick={() => trackEvent("Clicked Get Started", { location: "Bottom CTA" })} className="btn-orange-large" style={{ fontSize: 18, textDecoration: "none" }}>
               Get Started Free →
             </a>
             <p style={{ marginTop: 16, fontSize: 14, color: "#52525b" }}>Free forever • No credit card required</p>

@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { trackEvent } from "@/lib/mixpanel";
 
 function AportoLogo() {
     return (
@@ -80,6 +81,7 @@ export default function DashboardPage() {
     const handlePromo = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!promoCode.trim()) return;
+        trackEvent("Submit Promo Code", { code: promoCode });
         setPromoLoading(true);
         setPromoError("");
 
@@ -145,7 +147,10 @@ export default function DashboardPage() {
                 <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 16 }}>
                     <span style={{ fontSize: 13, color: "#71717a" }}>{session?.user?.email}</span>
                     <button
-                        onClick={() => signOut({ callbackUrl: "/" })}
+                        onClick={() => {
+                            trackEvent("Clicked Sign Out");
+                            signOut({ callbackUrl: "/" });
+                        }}
                         style={{
                             background: "transparent",
                             border: "1px solid #2a2a3e",

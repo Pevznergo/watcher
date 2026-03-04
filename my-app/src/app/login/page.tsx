@@ -4,6 +4,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { trackEvent, identifyUser } from "@/lib/mixpanel";
 
 function AportoLogo() {
     return (
@@ -27,6 +28,7 @@ export default function LoginPage() {
         setError("");
         setLoading(true);
 
+        trackEvent("Login Attempted");
         const result = await signIn("credentials", {
             email,
             password,
@@ -36,8 +38,11 @@ export default function LoginPage() {
         setLoading(false);
 
         if (result?.error) {
+            trackEvent("Login Failed", { error: result.error });
             setError("Invalid email or password");
         } else {
+            trackEvent("Login Success");
+            identifyUser(email); // Since we only have email here, use it as ID for now
             router.push("/dashboard");
             router.refresh();
         }

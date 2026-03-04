@@ -4,6 +4,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { trackEvent, identifyUser } from "@/lib/mixpanel";
 
 function AportoLogo() {
     return (
@@ -28,6 +29,8 @@ export default function RegisterPage() {
         setError("");
         setLoading(true);
 
+        trackEvent("Register Attempted");
+
         try {
             const res = await fetch("/api/register", {
                 method: "POST",
@@ -37,6 +40,7 @@ export default function RegisterPage() {
 
             const data = await res.json();
             if (!res.ok) {
+                trackEvent("Register Failed", { error: data.error || "Registration failed" });
                 setError(data.error || "Registration failed");
                 setLoading(false);
                 return;
@@ -50,12 +54,16 @@ export default function RegisterPage() {
 
             setLoading(false);
             if (result?.error) {
+                trackEvent("Register Success, Sign-in Failed");
                 setError("Registration succeeded but sign-in failed. Please sign in manually.");
             } else {
+                trackEvent("Register Success");
+                identifyUser(email, { name });
                 router.push("/dashboard");
                 router.refresh();
             }
         } catch {
+            trackEvent("Register Failed", { error: "Connection error" });
             setError("Connection error. Please try again.");
             setLoading(false);
         }

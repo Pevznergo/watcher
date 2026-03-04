@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { trackEvent } from "@/lib/mixpanel";
 
 const CREDIT_PACKS = [
     { key: "S", price: 22, credits: 30, label: "$22 → $30 credits", bonus: "+$8 bonus" },
@@ -36,6 +37,7 @@ export default function PricingProCard() {
     const totalPrice = 9 + packPrice;
 
     const handleUpgrade = async () => {
+        trackEvent("Clicked Upgrade to Pro", { creditPackage: selectedPack });
         setUpgrading(true);
         try {
             await fetch("/api/subscribe", {
@@ -111,7 +113,13 @@ export default function PricingProCard() {
                         return (
                             <button
                                 key={pack.key}
-                                onClick={() => setSelectedPack(isSelected ? null : pack.key)}
+                                onClick={() => {
+                                    const newPack = isSelected ? null : pack.key;
+                                    setSelectedPack(newPack);
+                                    if (newPack) {
+                                        trackEvent("Selected Credit Pack", { pack: newPack, price: pack.price, credits: pack.credits });
+                                    }
+                                }}
                                 style={{
                                     background: isSelected ? "rgba(249,115,22,0.1)" : "rgba(255,255,255,0.03)",
                                     border: `1px solid ${isSelected ? "rgba(249,115,22,0.5)" : "#2a2a3e"}`,
