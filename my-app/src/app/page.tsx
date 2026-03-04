@@ -51,10 +51,13 @@ function Navbar() {
         {/* Nav Links */}
         <div style={{ display: "flex", alignItems: "center", gap: 32, marginLeft: 48 }}>
           {["Features", "About", "Leaderboard", "Pricing"].map((item) => (
-            <a key={item} href={`#${item.toLowerCase()}`} className="nav-link" style={{ fontSize: 14, textDecoration: "none", fontWeight: 500 }}>
+            <a key={item} href={`/#${item.toLowerCase()}`} className="nav-link" style={{ fontSize: 14, textDecoration: "none", fontWeight: 500 }}>
               {item}
             </a>
           ))}
+          <a href="/models" className="nav-link" style={{ fontSize: 14, textDecoration: "none", fontWeight: 500 }}>
+            Models
+          </a>
         </div>
 
         {/* Right side */}
